@@ -51,12 +51,7 @@ jobs:
       run: npm ci
             
     - name: Build Docker Image
-      run: |
-           sudo docker build -t "dockerized-playwright-e2e-tests:latest" .
-           
-    - name: Save Docker Image as tarball
-      run: |
-        sudo docker save dockerized-playwright-e2e-tests:latest -o docker-image.tar       
+      run:  sudo docker build -t "dockerized-playwright-e2e-tests:latest" .      
 
   run:
     name: Run Docker Image
@@ -64,13 +59,16 @@ jobs:
     needs: build
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Use Docker Hub credentials stored as GitHub secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password stored as a   
 
-    - name: Load Docker Image
-      run: |
-        docker load < docker-image.tar
-        docker run dockerized-playwright-e2e-tests:latest
+    - name: Run Docker Image
+      run:  sudo docker run dockerized-playwright-e2e-tests:latest
 
   push:
     name: Push Docker Image to Docker Hub
