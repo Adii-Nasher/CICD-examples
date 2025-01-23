@@ -53,23 +53,6 @@ jobs:
     - name: Build Docker Image
       run:  sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/dockerized-playwright-e2e-tests .      
 
-  run:
-    name: Run Docker Image
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}  # Use Docker Hub credentials stored as GitHub secrets
-        password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password stored as a   
-
-    - name: Run Docker Image
-      run:  sudo docker run ${{ secrets.DOCKER_USERNAME }}/dockerized-playwright-e2e-tests
-
   push:
     name: Push Docker Image to Docker Hub
     runs-on: ubuntu-latest
@@ -86,4 +69,22 @@ jobs:
       
     - name: Push Docker Image to Docker Hub
       run: |
-            docker push ${{ secrets.DOCKER_USERNAME }}/dockerized-playwright-e2e-tests:latest    
+            docker push ${{ secrets.DOCKER_USERNAME }}/dockerized-playwright-e2e-tests:latest  
+
+
+  run:
+    name: Run Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Use Docker Hub credentials stored as GitHub secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password stored as a   
+
+    - name: Run Docker Image
+      run:  sudo docker run ${{ secrets.DOCKER_USERNAME }}/dockerized-playwright-e2e-tests  
