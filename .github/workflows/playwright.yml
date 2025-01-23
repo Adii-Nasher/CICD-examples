@@ -1,7 +1,7 @@
 name: Playwright Tests and Build
 on:
   push:
-    branches: main
+    branches: [main, feature/Aditya-Kumar-Singh]
   pull_request:
     branches: main   # Trigger on PRs to main branch
 
