@@ -1,9 +1,10 @@
 name: Playwright Tests and Build
 on:
-  push:
-    branches: [main, feature/Aditya-Kumar-Singh]
-  pull_request:
-    branches: main   # Trigger on PRs to main branch
+ workflow_dispatch:
+  # push:
+  #   branches: [main, feature/Aditya-Kumar-Singh]
+  # pull_request:
+  #   branches: main   # Trigger on PRs to main branch
 
 jobs:
   test:
