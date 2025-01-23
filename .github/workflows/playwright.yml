@@ -1,7 +1,7 @@
 name: Playwright Tests and Build
 on:
   push:
-    branches: main   # Trigger on Push to main branch
+    branches: main
   pull_request:
     branches: main   # Trigger on PRs to main branch
 
